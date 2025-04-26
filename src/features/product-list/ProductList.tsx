@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from 'react'
 import ProductCard from './ProductCard'
-import ProductModal from './ProductModal'
 import ProductCartDrawer from '../product-cart/ProductCartDrawer'
 import { Product } from '@/types/product'
+import Modal from '@/components/shared/Modal'
 
 const products: Product[] = [
   { title: 'Wireless Headphones', price: 129.99, category: 'Electronics', imageUrl: 'https://picsum.photos/seed/picsum/400/300', description: 'Noise-cancelling over-ear headphones with long battery life.' },
@@ -161,14 +161,17 @@ export default function ProductList() {
       )}
 
       {/* Modal */}
-      {selectedProduct && (
-        <ProductModal
-          product={selectedProduct}
-          onClose={() => setSelectedProduct(null)}
-          onAddToCart={() => handleAddToCart(selectedProduct)}
-        />
-      )}
-
+      <Modal isOpen={selectedProduct !== null} onClose={() => setSelectedProduct(null)}>
+        {
+          selectedProduct && (
+            <ProductCard 
+              {...selectedProduct}
+              onAddToCart={() => handleAddToCart(selectedProduct)}
+            />
+          )
+        }
+      </Modal>
+      
       <ProductCartDrawer
         isOpen={cartDrawerOpen}
         cart={cart}

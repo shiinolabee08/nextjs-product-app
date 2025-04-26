@@ -3,7 +3,11 @@ import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, User, Settings, LogOut } from 'lucide-react'
 
-export default function Topbar() {
+type TopbarProps = {
+  onToggleSidebar: () => void
+}
+
+export default function Topbar({ onToggleSidebar }: TopbarProps) {
   const router = useRouter()
   const [pageTitle, setPageTitle] = useState('')
   const [menuOpen, setMenuOpen] = useState(false)
@@ -45,7 +49,7 @@ export default function Topbar() {
     <header className="bg-white shadow-sm px-4 py-3 flex items-center justify-between">
       {/* Left side: Brand or Menu */}
       <div className="flex items-center gap-4">
-        <button className="md:hidden text-gray-600">
+        <button onClick={onToggleSidebar} className="text-gray-600 hover:cursor-pointer">
           <Menu className="w-6 h-6" />
         </button>
         <h1 className="text-xl font-bold text-gray-700">{pageTitle}</h1>
