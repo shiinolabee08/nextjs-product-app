@@ -1,6 +1,8 @@
+import { Product } from "@/types/product"
+
 interface CartDrawerProps {
   isOpen: boolean
-  cart: any[]
+  cart: Product[]
   onClose: () => void
   onClearCart: () => void
 }
@@ -13,7 +15,7 @@ export default function CartDrawer({ isOpen, cart, onClose, onClearCart }: CartD
       {/* Overlay */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-40 z-40"
+          className="fixed inset-0 bg-black/40 z-40"
           onClick={onClose}
         />
       )}
@@ -25,7 +27,7 @@ export default function CartDrawer({ isOpen, cart, onClose, onClearCart }: CartD
         }`}
       >
         <div className="flex items-center justify-between p-4 border-b">
-          <h2 className="text-lg font-semibold">Your Cart</h2>
+          <h2 className="text-lg text-gray-600 font-semibold">Your Cart</h2>
           <button
             onClick={onClose}
             className="text-gray-500 hover:text-gray-700 text-xl"
@@ -41,7 +43,7 @@ export default function CartDrawer({ isOpen, cart, onClose, onClearCart }: CartD
             cart.map((item, index) => (
               <div key={index} className="border rounded-lg p-3 flex items-center justify-between">
                 <div>
-                  <h3 className="font-semibold text-sm">{item.title}</h3>
+                  <h3 className="font-semibold text-gray-600 text-sm">{item.title}</h3>
                   <p className="text-gray-500 text-xs">${item.price.toFixed(2)}</p>
                 </div>
               </div>
@@ -51,7 +53,7 @@ export default function CartDrawer({ isOpen, cart, onClose, onClearCart }: CartD
 
         {/* Footer */}
         <div className="p-4 border-t flex flex-col gap-3">
-          <div className="flex justify-between font-semibold text-lg">
+          <div className="flex justify-between text-gray-600 font-semibold text-lg">
             <span>Total:</span>
             <span>${total.toFixed(2)}</span>
           </div>

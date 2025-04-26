@@ -4,14 +4,15 @@ import { useEffect, useState } from 'react'
 import ProductCard from './ProductCard'
 import ProductModal from './ProductModal'
 import ProductCartDrawer from '../product-cart/ProductCartDrawer'
+import { Product } from '@/types/product'
 
-const products = [
-  { title: 'Wireless Headphones', price: 129.99, category: 'Electronics', imageUrl: 'https://via.placeholder.com/400x300', description: 'Noise-cancelling over-ear headphones with long battery life.' },
-  { title: 'Smart Watch', price: 89.99, category: 'Electronics', imageUrl: 'https://via.placeholder.com/400x300', description: 'Track your fitness and get notifications on your wrist.' },
-  { title: 'Bluetooth Speaker', price: 59.99, category: 'Electronics', imageUrl: 'https://via.placeholder.com/400x300', description: 'Compact, loud, and waterproof – take it anywhere.' },
-  { title: 'Running Shoes', price: 99.99, category: 'Fashion', imageUrl: 'https://via.placeholder.com/400x300', description: 'Comfortable and stylish running shoes for daily workouts.' },
-  { title: 'Leather Wallet', price: 49.99, category: 'Fashion', imageUrl: 'https://via.placeholder.com/400x300', description: 'Premium leather wallet with multiple compartments.' },
-  { title: 'Coffee Maker', price: 79.99, category: 'Home', imageUrl: 'https://via.placeholder.com/400x300', description: 'Brew fresh coffee at home with ease.' },
+const products: Product[] = [
+  { title: 'Wireless Headphones', price: 129.99, category: 'Electronics', imageUrl: 'https://picsum.photos/seed/picsum/400/300', description: 'Noise-cancelling over-ear headphones with long battery life.' },
+  { title: 'Smart Watch', price: 89.99, category: 'Electronics', imageUrl: 'https://picsum.photos/seed/picsum/400/300', description: 'Track your fitness and get notifications on your wrist.' },
+  { title: 'Bluetooth Speaker', price: 59.99, category: 'Electronics', imageUrl: 'https://picsum.photos/seed/picsum/400/300', description: 'Compact, loud, and waterproof – take it anywhere.' },
+  { title: 'Running Shoes', price: 99.99, category: 'Fashion', imageUrl: 'https://picsum.photos/seed/picsum/400/300', description: 'Comfortable and stylish running shoes for daily workouts.' },
+  { title: 'Leather Wallet', price: 49.99, category: 'Fashion', imageUrl: 'https://picsum.photos/seed/picsum/400/300', description: 'Premium leather wallet with multiple compartments.' },
+  { title: 'Coffee Maker', price: 79.99, category: 'Home', imageUrl: 'https://picsum.photos/seed/picsum/400/300', description: 'Brew fresh coffee at home with ease.' },
 ]
 
 const categories = ['All', 'Electronics', 'Fashion', 'Home']
@@ -22,10 +23,10 @@ export default function ProductList() {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('All')
   const [currentPage, setCurrentPage] = useState(1)
-  const [selectedProduct, setSelectedProduct] = useState<any | null>(null)
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
 
   /* Product Cart */
-  const [cart, setCart] = useState<any[]>([])
+  const [cart, setCart] = useState<Product[]>([])
   const [cartDrawerOpen, setCartDrawerOpen] = useState(false)
 
   const toggleCartDrawer = () => setCartDrawerOpen(!cartDrawerOpen)
@@ -63,7 +64,7 @@ export default function ProductList() {
     setCartDrawerOpen(false)
   }
   
-  const handleAddToCart = (product: any) => {
+  const handleAddToCart = (product: Product) => {
     setCart((prev) => [...prev, product])
     alert(`${product.title} added to cart!`)
     setSelectedProduct(null)
@@ -89,7 +90,7 @@ export default function ProductList() {
           placeholder="Search products..."
           value={searchTerm}
           onChange={handleSearchChange}
-          className="border border-gray-300 rounded-md px-4 py-2 w-full md:w-1/3"
+          className="border border-gray-300 text-gray-600 rounded-md px-4 py-2 w-full md:w-1/3"
         />
 
         {/* Category Filter */}

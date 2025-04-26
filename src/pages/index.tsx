@@ -1,8 +1,9 @@
 import Layout from '@/components/shared/Layout'
-import DashboardCard from '@/components/dashboard/DashboardCard'
+import DashboardCard from '@/features/dashboard/DashboardCard'
+import type { NextPage } from 'next'
 import { DollarSign, Users, Activity } from 'lucide-react'
 
-export default function HomePage() {
+const HomePage: NextPage & { pageTitle?: string } = () => {
   return (
     <Layout>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -13,3 +14,7 @@ export default function HomePage() {
     </Layout>
   )
 }
+
+HomePage.pageTitle = 'Dashboard'
+
+export default HomePage

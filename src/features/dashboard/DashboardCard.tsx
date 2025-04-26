@@ -11,7 +11,7 @@ export default function DashboardCard({ title, value, icon }: DashboardCardProps
       {icon && <div className="text-blue-500">{icon}</div>}
       <div>
         <h2 className="text-sm text-gray-500">{title}</h2>
-        <p className="text-xl font-semibold">{value}</p>
+        <p className="text-xl text-gray-600 font-semibold">{value}</p>
       </div>
     </div>
   )
