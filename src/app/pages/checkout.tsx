@@ -18,7 +18,7 @@ export default function CheckoutPage() {
     e.preventDefault()
     alert('✅ Order placed successfully!')
     localStorage.removeItem('cart')
-    router.push('/')
+    router.push('/order-confirmation')
   }
 
   return (
