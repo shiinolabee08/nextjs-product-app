@@ -2,6 +2,8 @@ import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, User, Settings, LogOut } from 'lucide-react'
+import Image from 'next/image'
+import Link from 'next/link'
 
 type TopbarProps = {
   onToggleSidebar: () => void
@@ -61,10 +63,12 @@ export default function Topbar({ onToggleSidebar }: TopbarProps) {
           onClick={() => setMenuOpen(!menuOpen)}
           className="flex items-center space-x-2 hover:cursor-pointer focus:outline-none"
         >
-          <img
+          <Image
             src="https://i.pravatar.cc/40"
             alt="Avatar"
-            className="w-10 h-10 rounded-full object-cover border-2 border-gray-300"
+            width={40}
+            height={40}
+            className="rounded-full object-cover border-2 border-gray-300"
           />
         </button>
 
@@ -77,17 +81,17 @@ export default function Topbar({ onToggleSidebar }: TopbarProps) {
               transition={{ duration: 0.2 }}
               className="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg py-2 origin-top-right"
             >
-              <a href="#" className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
+              <Link href="/profile" className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
                 <User className="w-4 h-4 mr-2" />
                 Profile
-              </a>
-              <a href="#" className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
+              </Link>
+              <Link href="/profile/settings" className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
                 <Settings className="w-4 h-4 mr-2" />
                 Settings
-              </a>
+              </Link>
               <button
                 onClick={() => alert('Logged out!')}
-                className="flex w-full items-center px-4 py-2 text-gray-700 hover:bg-gray-100"
+                className="flex w-full items-center px-4 py-2 hover:cursor-pointer text-gray-700 hover:bg-gray-100"
               >
                 <LogOut className="w-4 h-4 mr-2" />
                 Logout

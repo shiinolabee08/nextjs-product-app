@@ -26,7 +26,7 @@ export default function Modal({ isOpen, onClose, children }: ModalProps) {
           {/* Modal */}
           <motion.div
             className="fixed inset-0 flex items-center justify-center z-50 p-4"
-            initial={{ opacity: 0, scale: 0.9, y: -50 }}
+            initial={{ opacity: 0, scale: 0.9, y: 100 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: -50 }}
             transition={{ duration: 0.3 }}
