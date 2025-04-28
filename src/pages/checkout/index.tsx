@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { Product } from '@/types/product'
 import type { NextPage } from 'next'
-import Layout from '@/components/shared/Layout'
+import DefaultLayout from '@/components/shared/DefaultLayout'
 
 const CheckoutPage : NextPage & { pageTitle?: string } = () => {
   const router = useRouter()
@@ -26,7 +26,7 @@ const CheckoutPage : NextPage & { pageTitle?: string } = () => {
   }
 
   return (
-    <Layout>
+    <DefaultLayout>
       <div className="mx-auto text-gray-600 px-4 py-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* LEFT: Shipping & Payment */}
@@ -92,7 +92,7 @@ const CheckoutPage : NextPage & { pageTitle?: string } = () => {
           }
         `}</style>
       </div>
-    </Layout>
+    </DefaultLayout>
   )
 }
 

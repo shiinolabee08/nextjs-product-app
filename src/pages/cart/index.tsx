@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import type { NextPage } from 'next'
 import { Product } from '@/types/product'
-import Layout from '@/components/shared/Layout'
+import DefaultLayout from '@/components/shared/DefaultLayout'
 
 const CartPage: NextPage & { pageTitle?: string } = () => {
   const [cart, setCart] = useState<Product[]>([])
@@ -27,7 +27,7 @@ const CartPage: NextPage & { pageTitle?: string } = () => {
   const total = cart.reduce((sum, item) => sum + item.price, 0)
 
   return (
-    <Layout>
+    <DefaultLayout>
       <div className="mx-auto px-4 py-8">
 
         {cart.length === 0 ? (
@@ -88,7 +88,7 @@ const CartPage: NextPage & { pageTitle?: string } = () => {
           </>
         )}
       </div>
-    </Layout>
+    </DefaultLayout>
   )
 }
 

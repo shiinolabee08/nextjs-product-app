@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Product } from '@/types/product'
 import type { NextPage } from 'next'
-import Layout from '@/components/shared/Layout'
+import DefaultLayout from '@/components/shared/DefaultLayout'
 
 const OrderConfirmationPage: NextPage & { pageTitle?: string } = () => {
   const [order, setOrder] = useState<Product[]>([])
@@ -21,7 +21,7 @@ const OrderConfirmationPage: NextPage & { pageTitle?: string } = () => {
   const total = order.reduce((sum, item) => sum + item.price, 0)
 
   return (
-    <Layout>
+    <DefaultLayout>
       <div className="max-w-3xl mx-auto px-4 py-16 text-center">
         <h1 className="text-3xl font-bold mb-4">🎉 Thank You for Your Order!</h1>
         <p className="text-gray-600 mb-8">
@@ -50,7 +50,7 @@ const OrderConfirmationPage: NextPage & { pageTitle?: string } = () => {
           <span className="text-blue-600 hover:underline text-sm">← Back to Home</span>
         </Link>
       </div>
-    </Layout>
+    </DefaultLayout>
   )
 }
 
