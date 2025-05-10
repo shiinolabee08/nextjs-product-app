@@ -43,7 +43,7 @@ export default function CartDrawer({ isOpen, cart, onClose, onClearCart }: CartD
             cart.map((item, index) => (
               <div key={index} className="border rounded-lg p-3 flex items-center justify-between">
                 <div>
-                  <h3 className="font-semibold text-gray-600 text-sm">{item.title}</h3>
+                  <h3 className="font-semibold text-gray-600 text-sm">{item.name}</h3>
                   <p className="text-gray-500 text-xs">${item.price.toFixed(2)}</p>
                 </div>
               </div>

@@ -7,12 +7,16 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'picsum.photos',
-        pathname: '/seed/picsum/400/300'
+        pathname: '/id/***/***/***'
       },
       {
         protocol: 'https',
         hostname: 'i.pravatar.cc',
         pathname: '/40',
+      },
+      {
+        protocol: 'https',
+        hostname: 'unsplash.com',
       }
     ],
   },

@@ -1,9 +1,12 @@
 import { useRouter } from 'next/router'
-import { useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, User, Settings, LogOut } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { ThemeContext } from '@/context/ThemeContext'
+import ThemeToggle from './ThemeToggle'
+
 
 type TopbarProps = {
   onToggleSidebar: () => void
@@ -14,6 +17,8 @@ export default function Topbar({ onToggleSidebar }: TopbarProps) {
   const [pageTitle, setPageTitle] = useState('')
   const [menuOpen, setMenuOpen] = useState(false)
   const menuRef = useRef<HTMLDivElement>(null)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { theme }: any = useContext(ThemeContext)
 
   useEffect(() => {
     const routeToTitle: Record<string, string> = {
@@ -48,7 +53,7 @@ export default function Topbar({ onToggleSidebar }: TopbarProps) {
   }, [menuOpen])
 
   return (
-    <header className="bg-white shadow-sm px-4 py-3 flex items-center justify-between">
+    <header className={`header ${theme === 'dark' ? 'header--dark' : ''} bg-white shadow-sm px-4 py-3 flex items-center justify-between`}>
       {/* Left side: Brand or Menu */}
       <div className="flex items-center gap-4">
         <button onClick={onToggleSidebar} className="text-gray-600 hover:cursor-pointer">
@@ -71,6 +76,8 @@ export default function Topbar({ onToggleSidebar }: TopbarProps) {
             className="rounded-full object-cover border-2 border-gray-300"
           />
         </button>
+
+        <ThemeToggle />
 
         <AnimatePresence>
           {menuOpen && (

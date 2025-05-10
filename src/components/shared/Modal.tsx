@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion'
 import { CircleX } from 'lucide-react'
+import { useEffect } from 'react'
 
 type ModalProps = {
   isOpen: boolean
@@ -10,6 +11,15 @@ type ModalProps = {
 }
 
 export default function Modal({ isOpen, onClose, children }: ModalProps) {
+
+  useEffect(() => {
+    const onEsc = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
+    if (isOpen) document.addEventListener('keydown', onEsc);
+    return () => document.removeEventListener('keydown', onEsc);
+  }, [isOpen, onClose]);
+
+  if (!isOpen) return null;
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -32,7 +42,7 @@ export default function Modal({ isOpen, onClose, children }: ModalProps) {
             transition={{ duration: 0.3 }}
           >
             <div
-              className="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative"
+              className="bg-white rounded-lg shadow-lg w-full max-w-xl p-6 relative"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Close button */}

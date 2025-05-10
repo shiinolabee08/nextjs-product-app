@@ -1,18 +1,21 @@
 'use client'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import Sidebar from '@/components/shared/Sidebar'
 import Topbar from '@/components/shared/Topbar'
+import { ThemeContext } from '@/context/ThemeContext'
 
 export default function DefaultLayout({ children }: { children: React.ReactNode }) {
 
   const [sidebarOpen, setSidebarOpen] = useState(true)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { theme }: any = useContext(ThemeContext)
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen)
   }
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className={`app ${theme === 'dark' ? 'app--dark' : ''} flex h-screen bg-gray-100`}>
       {/* Sidebar */}
       <Sidebar isOpen={sidebarOpen} />
       {/* Main Content */}

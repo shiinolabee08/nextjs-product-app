@@ -1,20 +1,19 @@
+import { Product } from '@/types/product'
 import Image from 'next/image'
 
 interface ProductCardProps {
-  title: string
-  price: number
-  imageUrl: string
-  description?: string
+  product: Product
   onView?: () => void
   onAddToCart?: () => void
 }
 
-export default function ProductCard({ title, price, imageUrl, description, onView, onAddToCart }: ProductCardProps) {
+export default function ProductCard({ product, onView, onAddToCart }: ProductCardProps) {
+  const { imageUrl, name, description, price } = product
   return (
     <div className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300">
-      <Image src={imageUrl} alt={title} width={100} height={100} className="w-full h-48 object-cover"/>
+      <Image src={imageUrl || ''} alt={name} width={100} height={100} className="w-full h-48 object-cover"/>
       <div className="p-4">
-        <h3 onClick={onView} className="text-lg font-semibold hover:underline hover:cursor-pointer text-gray-800">{title}</h3>
+        <h3 onClick={onView} className="text-lg font-semibold hover:underline hover:cursor-pointer text-gray-800">{name}</h3>
         <p className="text-gray-500 text-sm mb-2 truncate">{description}</p>
         <div className="flex justify-between items-center mb-2">
           <span className="text-blue-600 font-bold">${price.toFixed(2)}</span>
