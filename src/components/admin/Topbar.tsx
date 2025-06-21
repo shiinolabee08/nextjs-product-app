@@ -1,12 +1,12 @@
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, User, Settings, LogOut } from 'lucide-react'
+import { User, Settings, LogOut } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ThemeContext } from '@/context/ThemeContext'
-import ThemeToggle from './ThemeToggle'
-
+import ThemeToggle from '../shared/ThemeToggle'
+import { Avatar } from '@mui/material'
 
 type TopbarProps = {
   onToggleSidebar: () => void
@@ -22,12 +22,10 @@ export default function Topbar({ onToggleSidebar }: TopbarProps) {
 
   useEffect(() => {
     const routeToTitle: Record<string, string> = {
-      '/': 'Dashboard',
-      '/products': 'Products',
-      '/cart': 'Your Cart',
-      '/checkout': 'Checkout',
-      // dynamic route example
-      '/product/[id]': 'Product Detail',
+      '/admin': 'Dashboard',
+      '/admin/products': 'Products',
+      '/admin/product-categories': 'Product Categories',
+      '/admin/products/[id]': 'Product Detail',
     }
 
     const title = routeToTitle[router.route] || 'Page'
@@ -53,31 +51,26 @@ export default function Topbar({ onToggleSidebar }: TopbarProps) {
   }, [menuOpen])
 
   return (
-    <header className={`header ${theme === 'dark' ? 'header--dark' : ''} bg-white shadow-sm px-4 py-3 flex items-center justify-between`}>
+    <header className={`header ${theme === 'dark' ? 'header--dark' : ''} 
+      flex items-center justify-between`}>
       {/* Left side: Brand or Menu */}
       <div className="flex items-center gap-4">
-        <button onClick={onToggleSidebar} className="text-gray-600 hover:cursor-pointer">
+        {/* <button onClick={onToggleSidebar} className="text-gray-600 hover:cursor-pointer">
           <Menu className="w-6 h-6" />
-        </button>
-        <h1 className="text-xl font-bold text-gray-700">{pageTitle}</h1>
+        </button> */}
+        <h1 className="text-xl font-bold text-white">{pageTitle}</h1>
       </div>
       
       {/* Right side: User Avatar / Dropdown */}
       <div className="relative flex" ref={menuRef}>
         <ThemeToggle />
-
         <button
           onClick={() => setMenuOpen(!menuOpen)}
           className="flex-1 items-center space-x-2 hover:cursor-pointer focus:outline-none"
         >
-          <Image
-            src="https://i.pravatar.cc/40"
-            alt="Avatar"
-            width={40}
-            height={40}
-            className="rounded-full object-cover border-2 border-gray-300"
-          />
+          <Avatar src="https://i.pravatar.cc/40" alt="Avatar" />
         </button>
+
 
         <AnimatePresence>
           {menuOpen && (

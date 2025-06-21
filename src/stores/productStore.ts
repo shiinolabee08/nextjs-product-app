@@ -3,6 +3,8 @@ import { create } from 'zustand'
 
 type ProductStore = {
   products: Product[];
+  isLoaded: boolean;
+  setProducts: (product: Product[]) => void;
   addProduct: (product: Omit<Product, 'id'>) => void;
   removeProduct: (id: number) => void;
   editProduct: (product: Product) => void;
@@ -10,10 +12,12 @@ type ProductStore = {
 
 export const useProductStore = create<ProductStore>((set) => ({
   products: [],
+  isLoaded: false,
+  setProducts: (products) => set({ products, isLoaded: true }),
   addProduct: (product) => set((state) => ({
     products: [
       ...state.products,
-      {  ...product, id: Date.now() }, // simple unique ID for now
+      { ...product },
     ]
   })),
   removeProduct: (id: number) => set((state) => ({

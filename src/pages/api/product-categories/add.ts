@@ -2,13 +2,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { z } from 'zod'
 
-const productSchema = z.object({
-  name: z.string().min(1, 'Product name is required'),
-  sku: z.string().min(1, 'Product SKU is required and it should be unique.'),
-  price: z.string().min(1, 'Price must be greater than zero.'),
-  imageUrl: z.string().optional(),
-  description: z.string().optional(),
-  category: z.string().min(1, 'Category must be selected.'),
+const productCategorySchema = z.object({
+  name: z.string().min(1, 'Product category name is required'),
 })
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -16,25 +11,25 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(405).json({ error: 'Method Not Allowed' })
   }
 
-  const { name, sku, price, description, imageUrl, category } = req.body
+  const { name, description } = req.body
   const API_URL = process.env.API_URL; // e.g., 'https://api.example.com'
   const token = process.env.API_TOKEN; // optional, if needed
 
-  if (!name || !price || !imageUrl) {
+  if (!name) {
     return res.status(400).json({ error: 'Invalid input' })
   }
 
   try {
-    const body = productSchema.parse(req.body)
+    const body = productCategorySchema.parse(req.body)
     console.log('Proxying product to external API:', body)
 
-    const response = await fetch(`${API_URL}/products`, {
+    const response = await fetch(`${API_URL}/product-categories`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        // 'Authorization': `Bearer ${token}`,
+        'Authorization': `Bearer ${token}`,
       },
-      body: JSON.stringify({ name, sku, price, description, imageUrl, category }),
+      body: JSON.stringify({ name, description }),
     });
 
     if (!response.ok) {

@@ -1,11 +1,12 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useProductStore } from '@/stores/productStore'
 import ProductImagePicker from './ProductImagePicker'
 import { Product } from '@/types/product'
 import axios from 'axios'
-import { v4 as uuidv4 } from 'uuid'
+import { useProductCategoryStore } from '@/stores/productCategoryStore'
+import { ProductCategory } from '@/types/product-category'
 
 interface ProductFormProps {
   product?: Product | null;
@@ -13,8 +14,8 @@ interface ProductFormProps {
 }
 
 export default function ProductForm({ product, onSubmitSuccess }: ProductFormProps) {
+  const nameInputRef = useRef<HTMLInputElement>(null)
   const [form, setForm] = useState<Product>({
-    id: 0,
     name: '',
     price: 0,
     sku: '',
@@ -22,14 +23,25 @@ export default function ProductForm({ product, onSubmitSuccess }: ProductFormPro
     imageUrl: '',
   })
   const { addProduct, editProduct } = useProductStore()
+  const { productCategories } = useProductCategoryStore()
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState('')
-  const categories = ['All', 'Electronics', 'Fashion', 'Home'] // this is temporary
+  const [categories, setCategories] = useState<ProductCategory[]>([])
 
   useEffect(() => {
     if (product) setForm(product)
-  }, [product])
+
+    if (productCategories) {
+      setCategories(productCategories)
+    }
+  }, [product, productCategories])
+
+  useLayoutEffect(() => {
+    if (nameInputRef.current) {
+      nameInputRef.current.focus()
+    }
+  }, [])
 
   /** Handlers */
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -46,7 +58,6 @@ export default function ProductForm({ product, onSubmitSuccess }: ProductFormPro
     setIsSubmitting(true)
 
     const newProduct = {
-      id: uuidv4(),
       name: form.name,
       imageUrl: form.imageUrl,
       sku: form.sku,
@@ -62,11 +73,10 @@ export default function ProductForm({ product, onSubmitSuccess }: ProductFormPro
         editProduct(form)
       } else {
         // new record mode
-        const res = await axios.post('/api/products/add', {
+        const res = await axios.post('/api/products/add', newProduct, {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(newProduct),
         })
     
         if (!res.data) {
@@ -111,7 +121,7 @@ export default function ProductForm({ product, onSubmitSuccess }: ProductFormPro
       { error && error.length && <>
         <div className='error-messages'>{error}</div>
       </>}
-      <h2 className="text-xl font-semibold">Add Product</h2>
+      <h2 className="text-xl font-semibold">{ form.id ? 'Edit' : 'Add' } Product</h2>
 
       <div>
         <label className="block text-sm font-medium">Select Product Image</label>
@@ -122,6 +132,7 @@ export default function ProductForm({ product, onSubmitSuccess }: ProductFormPro
         <div>
           <label className="block text-sm font-medium">Product Name</label>
           <input
+            ref={nameInputRef}
             type="text"
             name="name"
             className="w-full mt-1 border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -176,9 +187,9 @@ export default function ProductForm({ product, onSubmitSuccess }: ProductFormPro
           onChange={handleOnChange}
         >
           <option value="">Select a category</option>
-          {categories.map((cat, index) => (
-            <option key={index} value={cat}>
-              {cat}
+          {categories.map((category) => (
+            <option key={category.id} value={category.name}>
+              {category.name}
             </option>
           ))}
         </select>
@@ -189,7 +200,7 @@ export default function ProductForm({ product, onSubmitSuccess }: ProductFormPro
         className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
         disabled={isSubmitting}
       >
-        {isSubmitting ? 'Submitting...' : 'Add Product'}
+        {isSubmitting ? 'Submitting...' : `${form.id ? 'Edit' : 'Add'} Product`}
       </button>
     </form>
   )

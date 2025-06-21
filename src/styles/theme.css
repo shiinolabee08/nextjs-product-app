@@ -1,35 +1,19 @@
 /* Block: app */
 .app {
-  background-color: #ffffff;
   color: #000000;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .app--dark {
-  background-color: #121212;
+  background-color: #1e2939;
   color: #ffffff;
 }
 
 /* Block: header */
 .header {
   padding: 1rem;
-  background-color: #f0f0f0;
 }
 
-.header--dark {
-  background-color: #1f1f1f;
-}
-
-/* Block: toggle */
-.toggle {
-  cursor: pointer;
-  padding: 0.5rem 1rem;
-  background-color: #e0e0e0;
-  border: none;
-  border-radius: 4px;
-}
-
-.toggle--dark {
-  background-color: #333333;
-  color: #ffffff;
+.header--dark, .sidebar--dark {
+  background-color: #1e2939;
 }

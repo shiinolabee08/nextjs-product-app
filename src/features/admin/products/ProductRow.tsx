@@ -1,45 +1,54 @@
 import { Product } from '@/types/product'
-import React from 'react'
+import React, { useState } from 'react'
 import Image from 'next/image'
 import { Delete, Edit } from 'lucide-react'
+import { TableCell, TableRow } from '@mui/material'
 
 interface ProductRowProps {
   product: Product;
-  onDelete: (id: number) => void;
+  onDelete: (id?: number) => void;
   onEdit: (product: Product) => void;
+  onPreview: (product: Product) => void;
 }
 
-function ProductRow({ product, onDelete, onEdit }: ProductRowProps) {
-  console.log('Rendered:', product.name);
-
+function ProductRow({ product, onDelete, onEdit, onPreview }: ProductRowProps) {
   return (
-    <tr>
-      <td colSpan={2}>
+    <TableRow>
+      <TableCell scope="row">
         { product.imageUrl &&
           <Image 
             src={product.imageUrl}
             alt={product.name}
-            loading="lazy"
             width={60}
             height={60}
+            onClick={() => onPreview(product)}
+            className="hover:cursor pointer"
           />
         }
-      </td>
-      <td>{product.name}</td>
-      <td>{product.sku}</td>
-      <td>{product.price}</td>
-      <td>{product.description}</td>
-      <td>{product.category}</td>
-      <td>
+      </TableCell>
+      <TableCell scope="row">
+        <a href="javascript:void()" 
+          onClick={() => onEdit(product)} 
+          className='hover:cursor-pointer'>
+            {product.name}
+        </a>
+      </TableCell>
+      <TableCell scope="row">{product.sku}</TableCell>
+      <TableCell scope="row">${product.price}</TableCell>
+      <TableCell scope="row">{product.description}</TableCell>
+      <TableCell scope="row">{product.category}</TableCell>
+      <TableCell scope="row">
         <button onClick={() => onEdit(product)} className="text-blue-500 cursor-pointer m-2">
           <Edit />
         </button>
+      </TableCell>
+      <TableCell scope="row">
         <button onClick={() => onDelete(product.id)} className="text-red-500 cursor-pointer m-2">
           <Delete />
         </button>
-      </td>
-    </tr>
-  );
+      </TableCell>
+    </TableRow>
+  )
 }
 
 export default React.memo(ProductRow)

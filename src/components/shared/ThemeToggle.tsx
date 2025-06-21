@@ -1,6 +1,7 @@
 'use client'
 import React, { useContext } from 'react'
 import { ThemeContext } from '@/context/ThemeContext'
+import { Moon, Sun } from 'lucide-react'
 
 const ThemeToggle = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -8,10 +9,10 @@ const ThemeToggle = () => {
 
   return (
     <button
-      className={`toggle ${theme === 'dark' ? 'toggle--dark' : ''}`}
+      className={`flex-1 hover:cursor-pointer focus:outline-none ${theme === 'dark' ? 'toggle--dark' : ''}`}
       onClick={toggleTheme}
     >
-      Switch to {theme === 'light' ? 'Dark' : 'Light'} Mode
+      { theme === 'dark' ? <Moon /> : <Sun />}
     </button>
   );
 };

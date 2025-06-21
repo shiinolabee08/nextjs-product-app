@@ -20,7 +20,7 @@ export default function MyApp({ Component, pageProps: { session, ...pageProps } 
 
   return (
     <ThemeProvider>
-      <SessionProvider session={session}>
+      {/* <SessionProvider session={session}> */}
         <div className={`flex min-h-screen flex-col ${inter.variable}`}>
           <Head>
             <title>{title} | AJP Templates</title>
@@ -28,10 +28,8 @@ export default function MyApp({ Component, pageProps: { session, ...pageProps } 
           <main className="flex-1">
             <PageComponent {...pageProps} />
           </main>
-
-          <footer className="bg-gray-200 p-4 text-blue-600 text-center">AJP Solutions | Copyright @ 2025 </footer>
         </div>
-      </SessionProvider>
+      {/* </SessionProvider> */}
     </ThemeProvider>
   )
 }
